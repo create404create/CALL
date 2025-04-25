@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getDatabase, ref, push, onChildAdded, remove, set, onValue } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
 
-// ✅ Your Firebase Config
+// ✅ Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBGuOdiiaHrQrRtCRY4iNSlRUH2eAyBADw",
   authDomain: "team-call-demo.firebaseapp.com",
@@ -22,15 +22,24 @@ const joinBtn = document.getElementById("joinTeam");
 const teamSection = document.getElementById("teamSection");
 const teamCodeDisplay = document.getElementById("teamCodeDisplay");
 const teamCodeInput = document.getElementById("teamCodeInput");
-const enterChatBtn = document.getElementById("enterChat");
 const usernameInput = document.getElementById("username");
+const enterChatBtn = document.getElementById("enterChat");
 const chatSection = document.getElementById("chatSection");
+const messagesDiv = document.getElementById("messages");
 const messageInput = document.getElementById("messageInput");
 const sendMessageBtn = document.getElementById("sendMessage");
-const messagesDiv = document.getElementById("messages");
+const teamNameLabel = document.getElementById("teamNameLabel");
+const copyCodeBtn = document.getElementById("copyCode");
+const clearChatBtn = document.getElementById("clearChat");
+const leaveChatBtn = document.getElementById("leaveChat");
+const typingDiv = document.getElementById("typing");
 
 let teamCode = "";
 let username = "";
+let typingRef;
+
+// Load from localStorage
+usernameInput.value = localStorage.getItem("chatUsername") || "";
 
 createBtn.onclick = () => {
   teamCode = Math.floor(10000 + Math.random() * 90000).toString();
@@ -49,24 +58,63 @@ joinBtn.onclick = () => {
 enterChatBtn.onclick = () => {
   username = usernameInput.value.trim();
   teamCode = teamCode || teamCodeInput.value.trim();
-  if (!username || !teamCode) return alert("Please enter name and code!");
+  if (!username || !teamCode) return alert("Please enter name and team code");
+  localStorage.setItem("chatUsername", username);
+
   teamSection.classList.add("hidden");
   chatSection.classList.remove("hidden");
+  teamNameLabel.textContent = "Team Code: " + teamCode;
 
   const chatRef = ref(db, "chats/" + teamCode);
+
   onChildAdded(chatRef, (data) => {
     const msg = data.val();
-    const msgEl = document.createElement("p");
-    msgEl.textContent = `${msg.name}: ${msg.text}`;
+    const msgEl = document.createElement("div");
+    msgEl.classList.add("message");
+    if (msg.name === username) msgEl.classList.add("self");
+    msgEl.innerHTML = `<strong>${msg.name}</strong>: ${msg.text}<span class="time">${msg.time}</span>`;
     messagesDiv.appendChild(msgEl);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
   });
+
+  // Typing status
+  typingRef = ref(db, "typing/" + teamCode);
+  onValue(typingRef, (snapshot) => {
+    const val = snapshot.val();
+    typingDiv.classList.toggle("hidden", !val || val === username);
+  });
 };
 
-sendMessageBtn.onclick = () => {
+sendMessageBtn.onclick = sendMessage;
+messageInput.onkeydown = (e) => {
+  set(typingRef, username);
+  if (e.key === "Enter") sendMessage();
+};
+messageInput.onblur = () => set(typingRef, "");
+
+function sendMessage() {
   const text = messageInput.value.trim();
   if (!text) return;
   const chatRef = ref(db, "chats/" + teamCode);
-  push(chatRef, { name: username, text });
+  const time = new Date().toLocaleTimeString();
+  push(chatRef, { name: username, text, time });
   messageInput.value = "";
+  set(typingRef, "");
+}
+
+copyCodeBtn.onclick = () => {
+  navigator.clipboard.writeText(teamCode);
+  alert("Team Code copied!");
+};
+
+clearChatBtn.onclick = () => {
+  if (confirm("Clear all messages?")) {
+    const chatRef = ref(db, "chats/" + teamCode);
+    set(chatRef, null);
+    messagesDiv.innerHTML = "";
+  }
+};
+
+leaveChatBtn.onclick = () => {
+  location.reload();
 };
