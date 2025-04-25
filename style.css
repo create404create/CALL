@@ -1,7 +1,7 @@
 body {
-  font-family: sans-serif;
-  background: #121212;
-  color: white;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,34 +9,40 @@ body {
 }
 
 .container {
+  width: 90%;
+  max-width: 500px;
   text-align: center;
 }
 
 .card {
-  margin: 20px;
+  margin-bottom: 20px;
 }
 
 button {
-  margin: 10px;
   padding: 10px 20px;
-  background: #00c3ff;
+  margin: 5px;
+  background-color: #00c3ff;
   border: none;
   border-radius: 5px;
+  color: white;
   cursor: pointer;
 }
 
-input, select {
+input {
   padding: 10px;
   margin: 10px;
+  width: 80%;
   border-radius: 5px;
-  width: 200px;
 }
 
-video {
-  width: 300px;
-  height: 200px;
-  margin: 10px;
-  background: black;
+#messages {
+  background: #222;
+  padding: 10px;
+  height: 300px;
+  overflow-y: scroll;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  text-align: left;
 }
 
 .hidden {
