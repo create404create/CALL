@@ -24,12 +24,12 @@ const searchInput = document.getElementById("search-input");
 let username = prompt("Enter your username:");
 if (!username) username = "Anonymous";
 
+// Appending messages with timestamp
 function appendMessage(data, isOwnMessage) {
   const msg = document.createElement("div");
   msg.classList.add("message", isOwnMessage ? "sent" : "received");
 
   msg.innerHTML = `<strong>${data.username}</strong>: ${data.message} <br><small>${data.timestamp}</small>`;
-  
   messagesContainer.appendChild(msg);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
@@ -44,6 +44,7 @@ messageForm.addEventListener("submit", (e) => {
   }
 });
 
+// Read message data from Firebase
 db.ref("messages").on("child_added", (snapshot) => {
   const data = snapshot.val();
   appendMessage(data, data.username === username);
@@ -66,13 +67,16 @@ fileInput.addEventListener("change", async (e) => {
   reader.readAsDataURL(file);
 });
 
+// Toggle Dark/Light Mode
 toggleThemeBtn.addEventListener("click", () => document.body.classList.toggle("dark-mode"));
 
+// Logout Button
 logoutBtn.addEventListener("click", () => {
   firebase.auth().signOut();
   window.location.reload();
 });
 
+// Search through messages
 searchInput.addEventListener("input", (e) => {
   const query = e.target.value.toLowerCase();
   const messages = document.querySelectorAll(".message");
