@@ -24,6 +24,17 @@ header {
   align-items: center;
 }
 
+#search-container {
+  padding: 10px;
+}
+
+#search-input {
+  width: 100%;
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
 #chat-container {
   flex: 1;
   display: flex;
@@ -96,4 +107,24 @@ footer {
 
 .dark-mode #message-form button {
   background-color: #075e54;
+}
+
+/* Voice Message */
+.voice-message {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.voice-message.sent {
+  align-self: flex-end;
+}
+
+.voice-message.received {
+  align-self: flex-start;
+}
+
+/* Search Highlight */
+.highlight {
+  background-color: yellow;
 }
