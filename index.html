@@ -8,7 +8,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>💬 Team Chat App</h1>
+    <h1>💬 Team Chat</h1>
 
     <div class="card">
       <button id="createTeam">Create Team</button>
@@ -23,11 +23,27 @@
     </div>
 
     <div id="chatSection" class="hidden">
+      <div class="chat-header">
+        <span id="teamNameLabel"></span>
+        <div class="actions">
+          <button id="copyCode">Copy Code</button>
+          <button id="clearChat">Clear Chat</button>
+          <button id="leaveChat">Leave</button>
+        </div>
+      </div>
+
       <div id="messages"></div>
-      <input type="text" id="messageInput" placeholder="Type a message" />
-      <button id="sendMessage">Send</button>
+
+      <div id="typing" class="hidden">Someone is typing...</div>
+
+      <div class="input-area">
+        <input type="text" id="messageInput" placeholder="Type a message" />
+        <button id="sendMessage">➤</button>
+      </div>
     </div>
   </div>
+
+  <footer>Created by <a href="https://github.com/ehtisham-dev" target="_blank">Ehtisham</a></footer>
 
   <script type="module" src="script.js"></script>
 </body>
