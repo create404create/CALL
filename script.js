@@ -1,12 +1,12 @@
-// ✅ Firebase Config
+// ✅ Firebase Config (working demo)
 const firebaseConfig = {
-  apiKey: "AIzaSyD-EXAMPLEKEY1234567890abcdefg",
-  authDomain: "team-call-app.firebaseapp.com",
-  databaseURL: "https://team-call-app.firebaseio.com",
-  projectId: "team-call-app",
-  storageBucket: "team-call-app.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef123456"
+  apiKey: "AIzaSyCzX-CkxJ_22xYcq9k6tIrrYc8BKyq3kRE",
+  authDomain: "team-call-demo.firebaseapp.com",
+  databaseURL: "https://team-call-demo-default-rtdb.firebaseio.com",
+  projectId: "team-call-demo",
+  storageBucket: "team-call-demo.appspot.com",
+  messagingSenderId: "15343466451",
+  appId: "1:15343466451:web:6485c0b2b3eb6b9a93ea6e"
 };
 
 firebase.initializeApp(firebaseConfig);
