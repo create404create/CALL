@@ -1,7 +1,3 @@
-// Firebase Setup
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import { getDatabase, ref, push, onChildAdded } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyBGuOdiiaHrQrRtCRY4iNSlRUH2eAyBADw",
   authDomain: "team-call-demo.firebaseapp.com",
@@ -13,72 +9,72 @@ const firebaseConfig = {
   measurementId: "G-41CG7X1KJ0"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
-let username = "";
+const messageForm = document.getElementById("message-form");
+const messageInput = document.getElementById("message-input");
+const messagesContainer = document.getElementById("messages");
+const fileInput = document.getElementById("file-input");
+const attachBtn = document.getElementById("attach");
+const toggleThemeBtn = document.getElementById("toggleTheme");
 
-window.login = function () {
-  const input = document.getElementById("usernameInput");
-  if (input.value.trim()) {
-    username = input.value.trim();
-    document.getElementById("loginContainer").style.display = "none";
-    document.getElementById("chatContainer").style.display = "flex";
+let username = prompt("Enter your username:");
+if (!username) username = "Anonymous";
+
+function appendMessage(data, isOwnMessage) {
+  const msg = document.createElement("div");
+  msg.classList.add("message", isOwnMessage ? "sent" : "received");
+
+  if (data.fileUrl) {
+    if (data.fileType.startsWith("image")) {
+      msg.innerHTML = `<strong>${data.username}</strong><br><img src="${data.fileUrl}" width="150" /><br><small>${data.timestamp}</small>`;
+    } else if (data.fileType.startsWith("video")) {
+      msg.innerHTML = `<strong>${data.username}</strong><br><video width="200" controls><source src="${data.fileUrl}" type="${data.fileType}" /></video><br><small>${data.timestamp}</small>`;
+    }
+  } else {
+    msg.innerHTML = `<strong>${data.username}</strong>: ${data.message}<br><small>${data.timestamp}</small>`;
   }
-};
 
-window.sendMessage = function () {
-  const messageInput = document.getElementById("messageInput");
-  const text = messageInput.value.trim();
-  if (text) {
-    push(ref(db, "messages"), {
-      sender: username,
-      text,
-      type: "text"
-    });
+  messagesContainer.appendChild(msg);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+messageForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const message = messageInput.value;
+  const timestamp = new Date().toLocaleTimeString();
+  if (message.trim() !== "") {
+    db.ref("messages").push({ username, message, timestamp });
     messageInput.value = "";
   }
-};
+});
 
-const fileInput = document.getElementById("fileInput");
-fileInput.addEventListener("change", (e) => {
+db.ref("messages").on("child_added", (snapshot) => {
+  const data = snapshot.val();
+  appendMessage(data, data.username === username);
+});
+
+attachBtn.addEventListener("click", () => fileInput.click());
+
+fileInput.addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
   const reader = new FileReader();
-  reader.onload = () => {
-    let type = "text";
-    if (file.type.startsWith("image")) type = "image";
-    else if (file.type.startsWith("video")) type = "video";
-    else if (file.type.startsWith("audio")) type = "audio";
-
-    push(ref(db, "messages"), {
-      sender: username,
-      file: reader.result,
-      type,
-      name: file.name
+  reader.onload = function (event) {
+    const fileUrl = event.target.result;
+    const timestamp = new Date().toLocaleTimeString();
+    db.ref("messages").push({
+      username,
+      fileUrl,
+      fileType: file.type,
+      timestamp,
     });
   };
   reader.readAsDataURL(file);
 });
 
-const messagesRef = ref(db, "messages");
-onChildAdded(messagesRef, (data) => {
-  const msg = data.val();
-  const div = document.createElement("div");
-  div.className = "message";
-  if (msg.sender === username) div.classList.add("self");
-
-  if (msg.type === "text") {
-    div.textContent = `${msg.sender}: ${msg.text}`;
-  } else if (msg.type === "image") {
-    div.innerHTML = `<strong>${msg.sender}:</strong><br><img src="${msg.file}" style="max-width: 200px;" />`;
-  } else if (msg.type === "video") {
-    div.innerHTML = `<strong>${msg.sender}:</strong><br><video src="${msg.file}" controls style="max-width: 200px;"></video>`;
-  } else if (msg.type === "audio") {
-    div.innerHTML = `<strong>${msg.sender}:</strong><br><audio src="${msg.file}" controls></audio>`;
-  }
-
-  document.getElementById("messages").appendChild(div);
-  document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+toggleThemeBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
 });
