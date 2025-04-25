@@ -2,42 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Team Call</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Call App</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
-    <h1>Team Call</h1>
-    <div id="choice">
-      <button onclick="createTeam()">Create Team</button>
-      <button onclick="showJoin()">Join Team</button>
+    <h1>📞 Team Call App</h1>
+    <div class="card">
+      <button id="createTeam">Create Team</button>
+      <button id="joinTeam">Join Team</button>
     </div>
 
-    <div id="createSection" class="hidden">
-      <p>Your Team Code:</p>
-      <h2 id="teamCode"></h2>
-      <label>
-        Call Type:
-        <select id="callTypeCreate">
-          <option value="video">Video</option>
-          <option value="audio">Audio</option>
-        </select>
-      </label>
-      <button onclick="startCall(true)">Start Call</button>
-    </div>
-
-    <div id="joinSection" class="hidden">
-      <input type="text" id="codeInput" placeholder="Enter 5-digit code"/>
-      <label>
-        Call Type:
-        <select id="callTypeJoin">
-          <option value="video">Video</option>
-          <option value="audio">Audio</option>
-        </select>
-      </label>
-      <button onclick="startCall(false)">Join Call</button>
+    <div id="teamSection" class="hidden">
+      <p id="teamCodeDisplay"></p>
+      <input type="text" id="teamCodeInput" placeholder="Enter Team Code" class="hidden" />
+      <select id="callType">
+        <option value="video">Video Call</option>
+        <option value="audio">Audio Call</option>
+      </select>
+      <button id="startCall">Start Call</button>
     </div>
 
     <div id="callArea" class="hidden">
@@ -46,8 +30,6 @@
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>
