@@ -3,47 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Team Chat</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>Chat App</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <h1>💬 Team Chat</h1>
+  <div id="loginContainer" class="login-container">
+    <h2>Login</h2>
+    <input type="text" id="usernameInput" placeholder="Enter your username" />
+    <button onclick="login()">Enter Chat</button>
+  </div>
 
-    <div class="card">
-      <button id="createTeam">Create Team</button>
-      <button id="joinTeam">Join Team</button>
-    </div>
-
-    <div id="teamSection" class="hidden">
-      <p id="teamCodeDisplay"></p>
-      <input type="text" id="teamCodeInput" placeholder="Enter Team Code" class="hidden" />
-      <input type="text" id="username" placeholder="Your Name" />
-      <button id="enterChat">Enter Chat</button>
-    </div>
-
-    <div id="chatSection" class="hidden">
-      <div class="chat-header">
-        <span id="teamNameLabel"></span>
-        <div class="actions">
-          <button id="copyCode">Copy Code</button>
-          <button id="clearChat">Clear Chat</button>
-          <button id="leaveChat">Leave</button>
-        </div>
-      </div>
-
-      <div id="messages"></div>
-
-      <div id="typing" class="hidden">Someone is typing...</div>
-
-      <div class="input-area">
-        <input type="text" id="messageInput" placeholder="Type a message" />
-        <button id="sendMessage">➤</button>
-      </div>
+  <div id="chatContainer" class="chat-container" style="display: none;">
+    <header>Chat Room</header>
+    <div id="messages" class="messages"></div>
+    <div class="input-area">
+      <input type="text" id="messageInput" placeholder="Type a message" />
+      <input type="file" id="fileInput" hidden />
+      <button onclick="document.getElementById('fileInput').click()">📎</button>
+      <button onclick="sendMessage()">➤</button>
     </div>
   </div>
 
-  <footer>Created by <a href="https://github.com/ehtisham-dev" target="_blank">Ehtisham</a></footer>
+  <footer>Created by Ehtisham</footer>
 
   <script type="module" src="script.js"></script>
 </body>
