@@ -18,9 +18,12 @@ const messagesContainer = document.getElementById("messages");
 const fileInput = document.getElementById("file-input");
 const attachBtn = document.getElementById("attach");
 const toggleThemeBtn = document.getElementById("toggleTheme");
+const logoutBtn = document.getElementById("logout");
+const searchInput = document.getElementById("search-input");
 
 let username = prompt("Enter your username:");
 if (!username) username = "Anonymous";
+let lastSeen = new Date().toLocaleString();
 
 function appendMessage(data, isOwnMessage) {
   const msg = document.createElement("div");
@@ -77,4 +80,23 @@ fileInput.addEventListener("change", async (e) => {
 
 toggleThemeBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
+});
+
+logoutBtn.addEventListener("click", () => {
+  username = prompt("Enter your username:");
+  lastSeen = new Date().toLocaleString();
+  alert("Logged out. Please enter a new username.");
+});
+
+searchInput.addEventListener("input", (e) => {
+  const searchTerm = e.target.value.toLowerCase();
+  const messages = document.querySelectorAll(".message");
+  messages.forEach((msg) => {
+    const text = msg.textContent.toLowerCase();
+    if (text.includes(searchTerm)) {
+      msg.classList.add("highlight");
+    } else {
+      msg.classList.remove("highlight");
+    }
+  });
 });
