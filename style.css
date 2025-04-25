@@ -1,50 +1,135 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   background: #111;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  color: #eaeaea;
+  margin: 0;
+  padding: 0;
+  background-image: url('https://www.transparenttextures.com/patterns/hexellence.png');
 }
 
 .container {
-  width: 90%;
   max-width: 500px;
+  margin: 50px auto;
+  background: #0b141a;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  overflow: hidden;
+  padding: 20px;
+}
+
+h1 {
   text-align: center;
+  color: #25d366;
 }
 
-.card {
-  margin-bottom: 20px;
-}
-
-button {
+.card button {
   padding: 10px 20px;
   margin: 5px;
-  background-color: #00c3ff;
+  background-color: #25d366;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
   color: white;
   cursor: pointer;
 }
 
 input {
   padding: 10px;
-  margin: 10px;
-  width: 80%;
-  border-radius: 5px;
+  margin: 10px 5px;
+  width: 90%;
+  border: none;
+  border-radius: 20px;
+  outline: none;
 }
 
 #messages {
-  background: #222;
-  padding: 10px;
+  background: #1e2428;
+  padding: 15px;
   height: 300px;
-  overflow-y: scroll;
-  margin-bottom: 10px;
+  overflow-y: auto;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+
+.message {
+  background: #202c33;
+  padding: 8px 12px;
+  margin: 6px 0;
+  border-radius: 10px;
+  max-width: 80%;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+.message.self {
+  background: #075e54;
+  color: white;
+  margin-left: auto;
+}
+
+.message span.time {
+  font-size: 0.75em;
+  color: #ccc;
+  display: block;
+  text-align: right;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #202c33;
+  padding: 10px;
   border-radius: 5px;
-  text-align: left;
+}
+
+.actions button {
+  background: #25d366;
+  border: none;
+  border-radius: 10px;
+  padding: 6px 10px;
+  margin-left: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.input-area {
+  display: flex;
+  align-items: center;
+}
+
+#sendMessage {
+  padding: 10px 16px;
+  background: #25d366;
+  border: none;
+  border-radius: 20px;
+  margin-left: 10px;
+  color: white;
+  font-size: 1.2em;
+  cursor: pointer;
 }
 
 .hidden {
   display: none;
+}
+
+#typing {
+  font-size: 0.9em;
+  color: #ccc;
+  margin-bottom: 5px;
+}
+
+footer {
+  text-align: center;
+  color: #777;
+  margin-top: 20px;
+  font-size: 0.9em;
+}
+footer a {
+  color: #25d366;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
