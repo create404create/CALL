@@ -4,28 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chat App</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="loginContainer" class="login-container">
-    <h2>Login</h2>
-    <input type="text" id="usernameInput" placeholder="Enter your username" />
-    <button onclick="login()">Enter Chat</button>
-  </div>
-
-  <div id="chatContainer" class="chat-container" style="display: none;">
-    <header>Chat Room</header>
-    <div id="messages" class="messages"></div>
-    <div class="input-area">
-      <input type="text" id="messageInput" placeholder="Type a message" />
-      <input type="file" id="fileInput" hidden />
-      <button onclick="document.getElementById('fileInput').click()">📎</button>
-      <button onclick="sendMessage()">➤</button>
+  <div id="app">
+    <header>
+      <h2>Chat App</h2>
+      <button id="toggleTheme">🌙</button>
+    </header>
+    
+    <div id="chat-container">
+      <div id="messages"></div>
     </div>
+
+    <form id="message-form">
+      <input type="file" id="file-input" hidden />
+      <button type="button" id="attach">📎</button>
+      <input type="text" id="message-input" placeholder="Type a message" autocomplete="off" />
+      <button type="submit">➤</button>
+    </form>
+    
+    <footer>Created by Ehtisham</footer>
   </div>
 
-  <footer>Created by Ehtisham</footer>
-
-  <script type="module" src="script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
