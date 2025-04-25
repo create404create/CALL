@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Team Call App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Team Chat</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="container">
-    <h1>📞 Team Call App</h1>
+    <h1>💬 Team Chat App</h1>
+
     <div class="card">
       <button id="createTeam">Create Team</button>
       <button id="joinTeam">Join Team</button>
@@ -17,16 +18,14 @@
     <div id="teamSection" class="hidden">
       <p id="teamCodeDisplay"></p>
       <input type="text" id="teamCodeInput" placeholder="Enter Team Code" class="hidden" />
-      <select id="callType">
-        <option value="video">Video Call</option>
-        <option value="audio">Audio Call</option>
-      </select>
-      <button id="startCall">Start Call</button>
+      <input type="text" id="username" placeholder="Your Name" />
+      <button id="enterChat">Enter Chat</button>
     </div>
 
-    <div id="callArea" class="hidden">
-      <video id="localVideo" autoplay muted></video>
-      <video id="remoteVideo" autoplay></video>
+    <div id="chatSection" class="hidden">
+      <div id="messages"></div>
+      <input type="text" id="messageInput" placeholder="Type a message" />
+      <button id="sendMessage">Send</button>
     </div>
   </div>
 
